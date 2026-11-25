@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: idea-only-asks-first
+expected_outcome: |
+  The folder is empty and the owner has only named the idea. Claude asks the owner to describe it
+  (who uses it, demo or real use, what data, which build path) in one message. It does not invent
+  answers, does not write a finished before-you-build.md, and does not start building.

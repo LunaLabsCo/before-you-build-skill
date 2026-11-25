@@ -1,0 +1,9 @@
+{
+  "name": "before-the-build",
+  "private": true,
+  "scripts": {
+    "generate": "node scripts/generate.mjs",
+    "test": "node tests/check.mjs",
+    "validate": "claude plugin validate ."
+  }
+}

@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: undecided-path-partial
+expected_outcome: |
+  The path is undecided, so T1 is not skipped and is answered Yes (CRM). Most other questions have no
+  answer. Result is schedule-check, but the file is marked draft and lists the unanswered questions.
+  Missing answers are not turned into No.

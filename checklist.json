@@ -1,0 +1,177 @@
+{
+  "checklistVersion": 2,
+  "title": "Before You Build: Bucket 1",
+  "paths": {
+    "A": "Path A: inside the main codebase. Only for approved builders. Works in the main codebase and database, so it always touches tech-maintained systems. The tech team accepts this risk and catches issues in code review, so T1 does not apply.",
+    "B": "Path B: outside the main codebase. Own code and own database. Uses the standard company sign-in and saves each user's sign-in ID. Runs on a company subdomain."
+  },
+  "context": [
+    {
+      "id": "title",
+      "label": "Title",
+      "required": true,
+      "prompt": "A short title for the prototype. Work it out from the idea. Do not ask."
+    },
+    {
+      "id": "owner",
+      "label": "Prototype owner",
+      "required": false,
+      "prompt": "The person responsible. Fill it in if you already know, such as from the conversation or git config. Do not ask. The Slack post shows who sent it."
+    },
+    {
+      "id": "purpose",
+      "label": "Purpose",
+      "required": true,
+      "prompt": "What idea, problem, or workflow are you trying to test?"
+    },
+    {
+      "id": "path",
+      "label": "Build path",
+      "required": true,
+      "prompt": "Path A is inside the main codebase (approved builders only). Path B is outside it. Use undecided if the owner has not chosen yet.",
+      "options": [
+        {
+          "value": "A",
+          "label": "Path A: inside the codebase"
+        },
+        {
+          "value": "B",
+          "label": "Path B: outside the codebase"
+        },
+        {
+          "value": "undecided",
+          "label": "Not decided yet"
+        }
+      ]
+    },
+    {
+      "id": "users",
+      "label": "Intended users",
+      "required": true,
+      "prompt": "Who will use it, and roughly how many people?"
+    },
+    {
+      "id": "usage",
+      "label": "Intended use",
+      "required": true,
+      "prompt": "How will people use it during the prototype stage?",
+      "options": [
+        {
+          "value": "demo",
+          "label": "Demo only"
+        },
+        {
+          "value": "trial",
+          "label": "Trial with users"
+        },
+        {
+          "value": "working_tool",
+          "label": "Working tool"
+        }
+      ]
+    },
+    {
+      "id": "data",
+      "label": "Data and systems",
+      "required": true,
+      "prompt": "Which data sources and systems will it use? Is the data dummy or real? It is fine to list unknowns."
+    }
+  ],
+  "questions": [
+    {
+      "id": "T1",
+      "question": "Does the prototype need data from a system maintained by the tech team?",
+      "explain": "Which system, and what data?",
+      "note": "The standard company sign-in, the user ID it gives, and the basic profile details it returns, such as name and work email, do not count.",
+      "notApplicableFor": [
+        "A"
+      ],
+      "notApplicableReason": "Path A works inside the main codebase. The tech team accepts this risk and reviews the code.",
+      "evidence": "plan",
+      "evidenceHint": "Ask which company systems it will get data from. Do not ask about access levels, such as read-only or write. Tech works that out. If code exists, look for API calls, database connections, keys, or SDKs for tech-team systems.",
+      "scheduleCheck": "before it connects to that system"
+    },
+    {
+      "id": "T3",
+      "question": "Does the workflow have dependent steps, approvals, or handoffs where failures or out-of-order actions could cause problems?",
+      "explain": "Describe one example of what could go wrong.",
+      "evidence": "infer",
+      "evidenceHint": "Do not ask the owner. Look at what they describe or build: approvals, handoffs, or steps that depend on each other. If code exists, look for status fields and multi-step flows. If you cannot tell, answer Unsure.",
+      "note": "A demo with made-up data counts as No, because nothing real can go wrong."
+    },
+    {
+      "id": "T4",
+      "question": "Will other people rely on the prototype, or on what it produces, to do real work?",
+      "explain": "Who relies on it, and what work would be affected if it were down or wrong?",
+      "evidence": "owner",
+      "evidenceHint": "Ask who else will depend on it. A plan or code cannot tell you this.",
+      "note": "The owner using it for their own work counts as No, unless what it produces is used by others, such as payouts, reports, or customer replies. Trying it out during a trial counts as No while the old way still runs alongside it."
+    },
+    {
+      "id": "T5",
+      "question": "Will more than one person update the same real data?",
+      "explain": "What real data would several people update?",
+      "note": "Several people editing dummy data in a demo counts as No.",
+      "evidence": "infer",
+      "evidenceHint": "Do not ask the owner. Look at what they describe or build, such as several people working on the same real records. If code exists, shared tables and edit screens are a clue. If you cannot tell, answer Unsure."
+    },
+    {
+      "id": "T6",
+      "question": "If data were lost or changed by mistake, would fixing it take more than resetting the prototype?",
+      "explain": "What would need to be restored or undone?",
+      "evidence": "infer",
+      "evidenceHint": "Do not ask the owner. Look at what they describe or build. If nobody relies on it, or the real data also lives somewhere else, a reset is usually fine. If you cannot tell, answer Unsure."
+    },
+    {
+      "id": "T7",
+      "question": "Will the prototype store or use PID (personal identifiable data), such as staff bank details?",
+      "explain": "What PID is it, and where will it be stored?",
+      "note": "PID means personal details that could harm someone if leaked, such as bank details, ID or passport numbers, salaries, home addresses, personal phone numbers, or health details. Real data without PID counts as No, such as product data, sales numbers, or work names. The company sign-in, its user ID, and the basic profile it returns, such as name and work email, count as No. Dummy or test data counts as No.",
+      "evidence": "owner",
+      "evidenceHint": "Only the owner knows if PID will go in. Ask what personal details it will hold, and what the prototype needs each one for. Do not take \"yes, just in case\". If the purpose does not need it, suggest leaving it out or using something safer, such as the sign-in user ID, a link to the system that already holds it, or only the last 4 digits. If the owner agrees, answer No. Do not ask who can view or change what. Tech works that out. If code exists, the schema and seed data show what is stored.",
+      "scheduleCheck": "before PID goes in"
+    }
+  ],
+  "routing": [
+    {
+      "id": "schedule-check",
+      "when": "Any question with a schedule-check step (T1, T7) is Yes.",
+      "result": "Start building now. Check with tech before that step happens. Post the heads-up in the shared channel."
+    },
+    {
+      "id": "incomplete",
+      "when": "Any applicable question is unanswered.",
+      "result": "Start building now. Answer the missing questions before PID goes in or other people rely on it."
+    },
+    {
+      "id": "go-ahead",
+      "when": "Anything else.",
+      "result": "Go ahead and build. Post the heads-up in the shared channel so tech knows what is coming. No reply is needed."
+    }
+  ],
+  "draftRule": "The file is a draft while any applicable question is unanswered, any required context field is empty, or any Yes or Unsure answer has no explanation. The owner field is optional and never makes the file a draft.",
+  "continueRule": "Work that does not depend on an open item can carry on, such as building the screens and the flow.",
+  "pathRule": "A question is skipped only when the path is confirmed. If the path is undecided, every question applies.",
+  "changes": [
+    {
+      "version": 1,
+      "changed": [],
+      "note": "First version."
+    },
+    {
+      "version": 2,
+      "changed": [
+        "T4",
+        "T6",
+        "T7"
+      ],
+      "removed": [
+        "T2",
+        "T8"
+      ],
+      "note": "T2 (private real data) is merged into T7, and T7 now asks only about PID. Claude now works out T6. T4 now counts only other people relying on it. T8 (outside people, messages, payments, costs) is removed, because most apps are internal. The results are now schedule-check, incomplete, and go-ahead. Older results of consult, clarify, or proceed must be worked out again."
+    }
+  ],
+  "slackChannel": "#tech-consults",
+  "notesRule": "Every other Yes or Unsure is a note for tech in the heads-up, not a reason to stop. Unsure means not known yet."
+}

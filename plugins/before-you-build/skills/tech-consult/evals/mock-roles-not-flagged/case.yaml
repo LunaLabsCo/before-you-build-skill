@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: mock-roles-not-flagged
+expected_outcome: |
+  The demo has employee and manager roles but only made-up data. T7 is No, because mock roles with
+  dummy data do not count. The approval flow is a demo with no real consequences, so T3 is No or at
+  most Unsure. Result is go-ahead.

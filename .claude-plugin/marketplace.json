@@ -1,0 +1,14 @@
+{
+  "name": "before-the-build",
+  "owner": {
+    "name": "Before the Build"
+  },
+  "description": "Checks and helpers for vibe coders building Bucket 1 prototypes.",
+  "plugins": [
+    {
+      "name": "before-you-build",
+      "source": "./plugins/before-you-build",
+      "description": "Before You Build: checks a Bucket 1 prototype and says whether to talk to the tech team early."
+    }
+  ]
+}

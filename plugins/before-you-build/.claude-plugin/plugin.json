@@ -1,0 +1,7 @@
+{
+  "name": "before-you-build",
+  "description": "Before You Build: checks a Bucket 1 prototype and says whether to talk to the tech team early.",
+  "author": {
+    "name": "Before the Build"
+  }
+}

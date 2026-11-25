@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: path-a-skips-t1
+expected_outcome: |
+  Path A is confirmed, so T1 is marked not applicable. The other questions are still answered.
+  Several people edit real prices that go live, so at least two of T4, T5 and T6 are Yes, shown as
+  worth knowing for tech. T7 is No, so nothing needs a check and the result is go-ahead.

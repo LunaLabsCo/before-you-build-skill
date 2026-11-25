@@ -1,0 +1,7 @@
+schema_version: "1.1"
+name: idea-flags-real-data
+expected_outcome: |
+  Claude writes before-you-build.md from the description alone. T1 (HR system) and T7 (real staff
+  bank details coming next month) are Yes, even though the data is dummy today. T4 is Unsure, not No,
+  because the owner does not know. Result is schedule-check: build now with dummy data, and check with
+  tech before real bank details go in. The Slack heads-up does not ask for a meeting.

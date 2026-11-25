@@ -1,0 +1,5 @@
+schema_version: "1.1"
+name: demo-goes-ahead
+expected_outcome: |
+  Every question is answered No from what the owner said. Result is go-ahead, the file is not a
+  draft, and Claude gives a short Slack heads-up for the shared channel with no meeting request.

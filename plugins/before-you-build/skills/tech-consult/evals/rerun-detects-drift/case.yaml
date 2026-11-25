@@ -1,0 +1,10 @@
+schema_version: "1.1"
+name: rerun-detects-drift
+context:
+  scaffold_script: place-files.sh
+expected_outcome: |
+  An earlier version 1 check said proceed and tech agreed "continue in Bucket 1". Since then the
+  code has added Stripe payments and a customers table with emails. Claude notices the drift even
+  though the owner says nothing changed, updates the file to version 2 (no T2 or T8), sets T7 to at
+  least Unsure with code as the source, changes the result, keeps the tech outcome but marks it as
+  belonging to the earlier check, and tells the owner what changed.

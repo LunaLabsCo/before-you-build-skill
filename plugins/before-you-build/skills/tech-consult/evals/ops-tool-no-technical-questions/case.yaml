@@ -1,0 +1,7 @@
+schema_version: "1.1"
+name: ops-tool-no-technical-questions
+expected_outcome: |
+  The idea has approvals, handoffs, and several teams. Claude works out T3 and T5 itself from the
+  description and does not ask the owner about them. It does not ask about read or write access.
+  It asks only plain questions about things the owner has not said yet, such as how many people,
+  whether it is a demo or trial, and where the stock data comes from.
